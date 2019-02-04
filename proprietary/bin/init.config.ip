@@ -1,0 +1,10 @@
+#!/system/bin/sh
+
+IP=$(/system/bin/getprop "dhcp.wwan0.ipaddress")
+DNS1=$(/system/bin/getprop "dhcp.wwan0.dns1")
+DNS2=$(/system/bin/getprop "dhcp.wwan0.dns2")
+
+/system/bin/ifconfig wwan0 $IP netmask 255.255.255.0 
+/system/bin/route add default gw $IP dev wwan0 
+/system/bin/ndc resolver setnetdns wwan0 $DNS1 $DNS2
+/system/bin/ndc network default set wwan0
